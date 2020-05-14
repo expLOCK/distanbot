@@ -6,7 +6,7 @@ import shelve
 from datetime import datetime, date
 from telebot import types
 
-token = '1209046437:AAHjzoBYOCM0nPcTc_eDuPssrQSlsrPpN5E'
+token = ''
 bot = telebot.TeleBot(token)
 
 @bot.message_handler(commands=["start"])
