@@ -9,6 +9,7 @@ from telebot import types
 token = ''
 bot = telebot.TeleBot(token)
 
+
 @bot.message_handler(commands=["start"])
 def welcome(message):
     podgrkey = types.InlineKeyboardMarkup()
@@ -18,8 +19,9 @@ def welcome(message):
 
     bot.send_message(message.chat.id, config.salam, reply_markup=podgrkey)
 
-    config.put_in_db(message.from_user.id, message.from_user.first_name,
-                     message.from_user.last_name, message.from_user.username)
+    config.put_in_object(message.from_user.id, message.from_user.first_name,
+                         message.from_user.last_name, message.from_user.username)
+
 
 @bot.message_handler(func=lambda message: message.text.lower() == 'начать сначала')
 def reset(message):
@@ -30,8 +32,9 @@ def reset(message):
 
     bot.send_message(message.chat.id, config.salam, reply_markup=podgrkey)
 
-    config.put_in_db(message.from_user.id, message.from_user.first_name,
-                     message.from_user.last_name, message.from_user.username)
+    config.put_in_object(message.from_user.id, message.from_user.first_name,
+                         message.from_user.last_name, message.from_user.username)
+
 
 @bot.message_handler(func=lambda message: message.text.lower() == 'дай ссылку')
 def givelink(message):
@@ -53,6 +56,8 @@ def givelink(message):
         z = False
 
     key = types.InlineKeyboardMarkup()
+
+    # TODO Вынести дисциплниы в .json (Массив)
     azamat = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
     vvedenie = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
     history = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
@@ -64,7 +69,7 @@ def givelink(message):
     diskra = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
     history95 = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
     etika = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
-    
+
     if day == 0:  # Понедельник
         if 585 <= vremya <= 639:
             key.add(diskra)
@@ -142,16 +147,19 @@ def givelink(message):
     else:
         bot.send_message(message.chat.id, config.link, reply_markup=key)
 
-    config.put_in_db_dai(message.from_user.id, message.from_user.first_name, message.from_user.last_name,
-                         message.from_user.username, hour, minute)
+    config.put_in_object(message.from_user.id, message.from_user.first_name, message.from_user.last_name,
+                         message.from_user.username, hours=hour, minutes=minute)
+
 
 @bot.message_handler(func=lambda message: message.text.lower() == 'полный список пар')
-def fulllist(message):
+def full_list(message):
     bot.send_message(message.chat.id, config.spisok, parse_mode='MarkdownV2')
+
 
 @bot.message_handler(func=lambda message: message.text.lower() == 'расписание')
 def ra(message):
     bot.send_document(message.chat.id, config.raspisanie, timeout=5)
+
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
@@ -180,6 +188,7 @@ def callback_inline(call):
                               text='Подгруппа №2. Отлично, идём дальше :)')
 
     bot.send_message(call.message.chat.id, text=config.helpp, reply_markup=dai, parse_mode='HTML')
+
 
 if __name__ == '__main__':
     bot.infinity_polling()

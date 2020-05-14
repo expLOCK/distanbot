@@ -1,3 +1,4 @@
+import json
 
 raspisanie = 'id файла с расписанием'
 
@@ -32,43 +33,22 @@ helpp = """Чтобы получить ссылку, нажми кнопку  <i
 \nЧтобы получить расписание всех пар, нажми кнопку <i>\"Расписание\"</i>
 \nЧтобы начать заново, нажми кнопку <i>\"Начать сначала\"</i>"""
 
-def put_in_db(msgid, first, last, userus):
-    userid = 'id: ' + str(msgid)
-    if str(first) != 'None':
-        userfname = ' name: ' + str(first)
-    else:
-        userfname = ''
-    if str(last) != 'None':
-        userlname = ' ' + str(last)
-    else:
-        userlname = ''
-    useruser = ' username: @' + str(userus)
 
-    users = open("users.txt", "a")
-    users.write(userid)
-    users.write(userfname)
-    users.write(userlname)
-    users.write(useruser)
-    users.write("\n")
-    users.close()
+def put_in_object(user_id, user_firstName, user_lastName, username, **kwargs):
+    dump_json_template = {
+        "User_ID: ": user_id,
+        "User first name: ": user_firstName,
+        "User last name: ": user_lastName,
+        "Username: ": "@" + username
+    }
 
-def put_in_db_dai(msgid, first, last, userus, hour, minute):
-    userid = 'id: ' + str(msgid)
-    if str(first) != 'None':
-        userfname = ' name: ' + str(first)
-    else:
-        userfname = ''
-    if str(last) != 'None':
-        userlname = ' ' + str(last)
-    else:
-        userlname = ''
-    useruser = ' username: @' + str(userus)
+    if kwargs:
+        dump_json_template["Time (H/M)"] = "{}:{}".format(kwargs.get("hours"), kwargs.get("minutes"))
 
-    user = open("usersdai.txt", "a")
-    user.write(str(hour) + ':' + str(minute) + ' ')
-    user.write(userid)
-    user.write(userfname)
-    user.write(userlname)
-    user.write(useruser)
-    user.write("\n")
-    user.close()
+    dump_json_template_ToJson = {
+        "UserData": dump_json_template
+    }
+
+    with open("UserHistoryData.json", "a", encoding="UTF-8") as jsonUserDataFile:
+        jsonUserDataFile.write(json.dumps(dump_json_template_ToJson))
+        jsonUserDataFile.write("\n")
