@@ -55,6 +55,7 @@ def givelink(message):
         z = False
 
     key = types.InlineKeyboardMarkup()
+
     ############################    Понедельник    #################################
     if day == 0:
         if 585 <= study_time <= 639:
@@ -62,7 +63,6 @@ def givelink(message):
             discipline_index = 0
         elif 640 <= study_time <= 745:
             key.add(disciplines.disciplines_links["AZAMAT"])
-
             discipline_index = 2
         else:
             t = False
@@ -204,3 +204,4 @@ def callback_inline(call):
 
 if __name__ == '__main__':
     bot.infinity_polling()
+
