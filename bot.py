@@ -176,7 +176,7 @@ def full_list(message):
 
 @bot.message_handler(func=lambda message: message.text.lower() == 'расписание')
 def ra(message):
-    bot.send_document(message, timeout=5)
+    bot.send_document(message, disciplines.disciplines_list, timeout=5)
 
 
 @bot.callback_query_handler(func=lambda call: True)
