@@ -1,3 +1,5 @@
+from telebot import types
+
 disciplines_links = {
     "AZAMAT": types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/a.khotov"),
     "introToSE": types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/minaevosman"),
