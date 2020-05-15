@@ -176,7 +176,7 @@ def full_list(message):
 
 @bot.message_handler(func=lambda message: message.text.lower() == 'расписание')
 def ra(message):
-    bot.send_document(message, disciplines.disciplines_list, timeout=5)
+    bot.send_document(message.chat.id, config.raspisanie, timeout=5)
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -192,14 +192,14 @@ def callback_inline(call):
 
     if call.data == 'podgr1':
         pd = shelve.open('podgrupp')
-        pd[str(call.from_user.id)] = '1'  # в хранилище записываем значение '1' для ключа 'айди юзера'
+        pd[str(call.from_user.id)] = '1'
         pd.close()
         bot.answer_callback_query(call.id, "Answer is 1")
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text='Подгруппа №1. Отлично, идём дальше :)')
     elif call.data == 'podgr2':
         pd = shelve.open('podgrupp')
-        pd[str(call.from_user.id)] = '2'  # в хранилище записываем значение '2' для ключа 'айди юзера'
+        pd[str(call.from_user.id)] = '2'
         pd.close()
         bot.answer_callback_query(call.id, "Answer is 2")
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
@@ -207,10 +207,6 @@ def callback_inline(call):
 
     bot.send_message(call.message.chat.id, text=config.help, reply_markup=dai, parse_mode='HTML')
 
-@bot.message_handler(commands=['rasp'])
-def find_file_ids(message):
-    f = open('raspisanie.jpg', 'rb')
-    img = bot.send_document(message.chat.id, f, timeout=5)
-    bot.send_message(message.chat.id, img.document.file_id, reply_to_message_id=img.message_id)
+
 if __name__ == '__main__':
     bot.infinity_polling()
