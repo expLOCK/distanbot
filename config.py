@@ -1,16 +1,13 @@
 import json
 
 
-def put_in_object(user_id, user_firstName, user_lastName, username, **kwargs):
+def put_in_object(user_id, user_firstName, user_lastName, username):
     dump_json_template = {
-        "User_ID: ": user_id,
-        "User first name: ": user_firstName,
-        "User last name: ": user_lastName,
+        "ID: ": user_id,
+        "First name: ": user_firstName,
+        "Last name: ": user_lastName,
         "Username: ": "@" + username
     }
-
-    if kwargs:
-        dump_json_template["Time (H/M)"] = "{}:{}".format(kwargs.get("hours"), kwargs.get("minutes"))
 
     dump_json_template_ToJson = {
         "UserData": dump_json_template
