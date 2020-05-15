@@ -32,9 +32,6 @@ def reset(message):
 
     bot.send_message(message.chat.id, config.salam, reply_markup=podgrkey)
 
-    config.put_in_object(message.from_user.id, message.from_user.first_name,
-                         message.from_user.last_name, message.from_user.username)
-
 
 @bot.message_handler(func=lambda message: message.text.lower() == 'дай ссылку')
 def givelink(message):
@@ -57,17 +54,17 @@ def givelink(message):
         z = False
 
     key = types.InlineKeyboardMarkup()
-    azamat = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/a.khotov")
-    vvedenie = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/minaevosman")
-    history = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/hatmat73")
-    bjd = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/yusupu")
-    eng1 = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/elinastar.ru")
-    eng2 = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/star1918")
-    matan = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/aldymadina537")
-    terver = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/zaya310387")
-    diskra = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/magomerzaev57")
-    history95 = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/nataev.s")
-    etika = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/sbeguev")
+    azamat = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
+    vvedenie = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
+    history = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
+    bjd = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
+    eng1 = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
+    eng2 = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
+    matan = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
+    terver = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
+    diskra = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
+    history95 = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
+    etika = types.InlineKeyboardButton(text='Подключиться', url="https://chesuru.webex.com/meet/")
     if day == 0:  # Понедельник
         if 585 <= vremya <= 639:
             key.add(diskra)
@@ -166,9 +163,6 @@ def givelink(message):
     else:
         bot.send_message(message.chat.id, config.para[x], reply_markup=key)
 
-    config.put_in_object(message.from_user.id, message.from_user.first_name, message.from_user.last_name,
-                         message.from_user.username, hours=hour, minutes=minute)
-
 
 @bot.message_handler(func=lambda message: message.text.lower() == 'полный список пар')
 def full_list(message):
@@ -177,7 +171,7 @@ def full_list(message):
 
 @bot.message_handler(func=lambda message: message.text.lower() == 'расписание')
 def ra(message):
-    bot.send_document(message, timeout=5)
+    bot.send_document(message.chat.id, config.raspisanie, timeout=5)
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -193,14 +187,14 @@ def callback_inline(call):
 
     if call.data == 'podgr1':
         pd = shelve.open('podgrupp')
-        pd[str(call.from_user.id)] = '1'  # в хранилище записываем значение '1' для ключа 'айди юзера'
+        pd[str(call.from_user.id)] = '1'
         pd.close()
         bot.answer_callback_query(call.id, "Answer is 1")
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text='Подгруппа №1. Отлично, идём дальше :)')
     elif call.data == 'podgr2':
         pd = shelve.open('podgrupp')
-        pd[str(call.from_user.id)] = '2'  # в хранилище записываем значение '2' для ключа 'айди юзера'
+        pd[str(call.from_user.id)] = '2'
         pd.close()
         bot.answer_callback_query(call.id, "Answer is 2")
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
@@ -208,10 +202,7 @@ def callback_inline(call):
 
     bot.send_message(call.message.chat.id, text=config.helpp, reply_markup=dai, parse_mode='HTML')
 
-@bot.message_handler(commands=['rasp'])
-def find_file_ids(message):
-    f = open('raspisanie.jpg', 'rb')
-    img = bot.send_document(message.chat.id, f, timeout=5)
-    bot.send_message(message.chat.id, img.document.file_id, reply_to_message_id=img.message_id)
+
 if __name__ == '__main__':
     bot.infinity_polling()
+
