@@ -1,0 +1,9 @@
+# Ignore PyCharm work-folder
+/.idea
+
+# @nosferatu-id test files ignore
+dump-test.py
+users.txt
+usersdai.txt
+UserData.json
+UserHistoryData.json
