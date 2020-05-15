@@ -33,9 +33,6 @@ def reset(message):
 
     bot.send_message(message.chat.id, config.salaam, reply_markup=podgrkey)
 
-    config.put_in_object(message.from_user.id, message.from_user.first_name,
-                         message.from_user.last_name, message.from_user.username)
-
 
 @bot.message_handler(func=lambda message: message.text.lower() == 'дай ссылку')
 def givelink(message):
@@ -164,9 +161,6 @@ def givelink(message):
         bot.send_message(message.chat.id, config.chill)
     else:
         bot.send_message(message.chat.id, disciplines.disciplines_out_list[discipline_index], reply_markup=key)
-
-    config.put_in_object(message.from_user.id, message.from_user.first_name, message.from_user.last_name,
-                         message.from_user.username, hours=hour, minutes=minute)
 
 
 @bot.message_handler(func=lambda message: message.text.lower() == 'полный список пар')
