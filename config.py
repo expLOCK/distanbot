@@ -2,14 +2,11 @@ import json
 
 def put_in_object(user_id, user_firstName, user_lastName, username, **kwargs):
     dump_json_template = {
-        "User_ID: ": user_id,
-        "User first name: ": user_firstName,
-        "User last name: ": user_lastName,
+        "ID: ": user_id,
+        "First name: ": user_firstName,
+        "Last name: ": user_lastName,
         "Username: ": "@" + username
     }
-
-    if kwargs:
-        dump_json_template["Time (H/M)"] = "{}:{}".format(kwargs.get("hours"), kwargs.get("minutes"))
 
     dump_json_template_ToJson = {
         "UserData": dump_json_template
@@ -50,17 +47,17 @@ no_podgrupp = """По всей видимости, ты не указал ном
 
 chill = 'В данный момент времени пар нет. Отдыхай :)'
 
-spisok = """[Программирование](https://chesuru.webex.com/meet/a.khotov)\n
-[Введение в ПИ](https://chesuru.webex.com/meet/minaevosman)\n
-[История](https://chesuru.webex.com/meet/hatmat73)\n
-[БЖД](https://chesuru.webex.com/meet/yusupu)\n
-[Математический Анализ](https://chesuru.webex.com/meet/aldymadina537)\n
-[Теория Вероятностей](https://chesuru.webex.com/meet/zaya310387)\n
-[Дискретная Математика](https://chesuru.webex.com/meet/magomerzaev57)\n
-[История ЧР](https://chesuru.webex.com/meet/nataev.s)\n
-[Чеченская Культура и Этика](https://chesuru.webex.com/meet/sbeguev)\n 
-[Английский 1 подгр](https://chesuru.webex.com/meet/elinastar.ru)\n 
-[Английский 2 подгр](https://chesuru.webex.com/meet/star1918)"""
+spisok = """[Программирование](https://chesuru.webex.com/meet/)\n
+[Введение в ПИ](https://chesuru.webex.com/meet/)\n
+[История](https://chesuru.webex.com/meet/)\n
+[БЖД](https://chesuru.webex.com/meet/)\n
+[Математический Анализ](https://chesuru.webex.com/meet/)\n
+[Теория Вероятностей](https://chesuru.webex.com/meet/)\n
+[Дискретная Математика](https://chesuru.webex.com/meet/)\n
+[История ЧР](https://chesuru.webex.com/meet/)\n
+[Чеченская Культура и Этика](https://chesuru.webex.com/meet/)\n 
+[Английский 1 подгр](https://chesuru.webex.com/meet/)\n 
+[Английский 2 подгр](https://chesuru.webex.com/meet/)"""
 
 helpp = """Чтобы получить ссылку, нажми кнопку  <i>\"Дай ссылку\"</i>
 \nЧтобы получить полный список ссылок на трансляции, нажми кнопку <i>\"Полный список пар\"</i>
