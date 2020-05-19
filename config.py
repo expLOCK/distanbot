@@ -2,10 +2,14 @@ import json
 
 
 def put_in_object(user_id, user_firstName, user_lastName, username):
+    if user_lastName is None:
+        user_lastName = ''
+    if username is None:
+        username = 'null'
+
     dump_json_template = {
         "ID: ": user_id,
-        "First name: ": user_firstName,
-        "Last name: ": user_lastName,
+        "Name: ": user_firstName + " " + user_lastName,
         "Username: ": "@" + username
     }
 
