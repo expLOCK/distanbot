@@ -2,10 +2,14 @@ import json
 
 
 def put_in_object(user_id, user_firstName, user_lastName, username):
+    if user_lastName is None:
+        user_lastName = ''
+    if username is None:
+        username = 'null'
+
     dump_json_template = {
         "ID: ": user_id,
-        "First name: ": user_firstName,
-        "Last name: ": user_lastName,
+        "Name: ": user_firstName + " " + user_lastName,
         "Username: ": "@" + username
     }
 
@@ -17,6 +21,15 @@ def put_in_object(user_id, user_firstName, user_lastName, username):
         jsonUserDataFile.write(json.dumps(dump_json_template_ToJson))
         jsonUserDataFile.write("\n")
 
+
+def get_discipline(index):
+    with open("disciplines.json", "r", encoding="utf-8") as jsonFile:
+        data = json.loads(jsonFile.read())
+        data_index = data["{}".format(index)]
+        if data_index[2] == "yes":
+            return "{}\t({})\n\n{}".format(data_index[0], data_index[1], "Можно спать")
+        elif data_index[2] == "no":
+            return "{}\t({})\n\n{}".format(data_index[0], data_index[1], "Спать нельзя")
 
 raspisanie = 'BQACAgIAAxkDAAICPl64er94NiYxab2Vu5aCMe1nx5QQAAIGCgACC4nASfd25oHvfjAkGQQ'
 
@@ -31,7 +44,6 @@ no_subgroup = """По всей видимости, ты не указал ном
 Нажми кнопку <i>\"Начать сначала\"</i> и следуй дальнейшим инструкциям."""
 
 chill = 'В данный момент времени пар нет. Отдыхай :)'
-
 
 help = """Чтобы получить ссылку, нажми кнопку  <i>\"Дай ссылку\"</i>
 \nЧтобы получить полный список ссылок на трансляции, нажми кнопку <i>\"Полный список пар\"</i>
