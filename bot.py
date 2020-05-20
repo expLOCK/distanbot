@@ -160,7 +160,7 @@ def givelink(message):
     elif not t:
         bot.send_message(message.chat.id, config.chill)
     else:
-        bot.send_message(message.chat.id, disciplines.disciplines_out_list[discipline_index], reply_markup=key)
+        bot.send_message(message.chat.id, config.get_discipline(discipline_index), reply_markup=key)
 
 
 @bot.message_handler(func=lambda message: message.text.lower() == 'полный список пар')
@@ -204,4 +204,3 @@ def callback_inline(call):
 
 if __name__ == '__main__':
     bot.infinity_polling()
-
