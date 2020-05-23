@@ -55,30 +55,35 @@ def givelink(message):
         z = False
 
     key = types.InlineKeyboardMarkup()
-
     ############################    Понедельник    #################################
     if day == 0:
-        if 585 <= study_time <= 639:
+        if 600 <= study_time <= 669:
             key.add(disciplines.disciplines_links["discreteMath"])
             discipline_index = 0
-        elif 640 <= study_time <= 745:
+        elif 670 <= study_time <= 739:
+            key.add(disciplines.disciplines_links["AZAMAT"])
+            discipline_index = 2
+        elif 740 <= study_time <= 789:
+            key.add(disciplines.disciplines_links["break"])
+            discipline_index = 16
+        elif 790 <= study_time <= 859:
             key.add(disciplines.disciplines_links["AZAMAT"])
             discipline_index = 2
         else:
             t = False
     ##############################  Вторник    #####################################
     elif day == 1:
-        if 500 <= study_time <= 584:
+        if 500 <= study_time <= 599:
             if user_subgroup == '1':
                 key.add(disciplines.disciplines_links["english_subgroup_1"])
                 discipline_index = 4
             elif user_subgroup == '2':
                 key.add(disciplines.disciplines_links["AZAMAT"])
                 discipline_index = 3
-        elif 585 <= study_time <= 639:
+        elif 600 <= study_time <= 669:
             key.add(disciplines.disciplines_links["discreteMath"])
             discipline_index = 1
-        elif 640 <= study_time <= 694:
+        elif 670 <= study_time <= 739:
             if week == 20 or week == 22 or week == 24:
                 key.add(disciplines.disciplines_links["history"])
                 discipline_index = 6
@@ -89,21 +94,21 @@ def givelink(message):
             t = False
     ############################    Среда    ##################################
     elif day == 2:
-        if 500 <= study_time <= 584:
+        if 500 <= study_time <= 599:
             if week == 20 or week == 22 or week == 24:
                 key.add(disciplines.disciplines_links["history"])
                 discipline_index = 5
             elif week == 21 or week == 23 or week == 25:
                 key.add(disciplines.disciplines_links["lifeSafety"])
                 discipline_index = 7
-        elif 585 <= study_time <= 639:
+        elif 600 <= study_time <= 669:
             if week == 20 or week == 22 or week == 24:
                 key.add(disciplines.disciplines_links["cheCultureAndEthics"])
                 discipline_index = 9
             elif week == 21 or week == 23 or week == 25:
                 key.add(disciplines.disciplines_links["cheHistory"])
                 discipline_index = 10
-        elif 640 <= study_time <= 694:
+        elif 670 <= study_time <= 739:
             if user_subgroup == '1':
                 t = False
             elif user_subgroup == '2':
@@ -113,13 +118,13 @@ def givelink(message):
             t = False
     ############################    Четверг    ################################
     elif day == 3:  # Четверг
-        if 500 <= study_time <= 584:
+        if 500 <= study_time <= 599:
             key.add(disciplines.disciplines_links["mathAnalysis"])
             discipline_index = 12
-        elif 585 <= study_time <= 639:
+        elif 600 <= study_time <= 669:
             key.add(disciplines.disciplines_links["mathAnalysis"])
             discipline_index = 11
-        elif 640 <= study_time <= 694:
+        elif 670 <= study_time <= 739:
             if user_subgroup == '1':
                 key.add(disciplines.disciplines_links["AZAMAT"])
                 discipline_index = 3
@@ -131,19 +136,22 @@ def givelink(message):
     # Выходной
     ############################    Суббота    ################################
     elif day == 5:
-        if 500 <= study_time <= 584:
+        if 500 <= study_time <= 599:
             key.add(disciplines.disciplines_links["probabilityTheory"])
             discipline_index = 13
-        elif 585 <= study_time <= 639:
+        elif 600 <= study_time <= 669:
             key.add(disciplines.disciplines_links["introToSE"])
             discipline_index = 14
-        elif 640 <= study_time <= 694:
+        elif 670 <= study_time <= 739:
             if user_subgroup == '1':
                 key.add(disciplines.disciplines_links["introToSE"])
                 discipline_index = 15
             elif user_subgroup == '2':
                 t = False
-        elif 695 <= study_time <= 745:
+        elif 740 <= study_time <= 789:
+            key.add(disciplines.disciplines_links["break"])
+            discipline_index = 16
+        elif 790 <= study_time <= 859:
             if user_subgroup == '1':
                 t = False
             elif user_subgroup == '2':
@@ -183,6 +191,7 @@ def callback_inline(call):
     dai.row(button1)
     dai.row(button2, button3)
     dai.row(button4)
+    break_flag = False
 
     if call.data == 'podgr1':
         pd = shelve.open('podgrupp')
@@ -198,8 +207,12 @@ def callback_inline(call):
         bot.answer_callback_query(call.id, "Answer is 2")
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text='Подгруппа №2. Отлично, идём дальше :)')
+    elif call.data == 'good':
+        bot.answer_callback_query((call.id, '👍'))
+        break_flag = True
 
-    bot.send_message(call.message.chat.id, text=config.help, reply_markup=dai, parse_mode='HTML')
+    if not break_flag:
+        bot.send_message(call.message.chat.id, text=config.help, reply_markup=dai, parse_mode='HTML')
 
 
 if __name__ == '__main__':
