@@ -1,7 +1,7 @@
 import json
 
-
 def put_in_object(user_id, user_firstName, user_lastName, username):
+
     if user_lastName is None:
         user_lastName = ''
     if username is None:
@@ -21,7 +21,6 @@ def put_in_object(user_id, user_firstName, user_lastName, username):
         jsonUserDataFile.write(json.dumps(dump_json_template_ToJson))
         jsonUserDataFile.write("\n")
 
-
 def get_discipline(index):
     with open("disciplines.json", "r", encoding="utf-8") as jsonFile:
         data = json.loads(jsonFile.read())
@@ -30,8 +29,10 @@ def get_discipline(index):
             return "{}\t({})\n\n{}".format(data_index[0], data_index[1], "Можно спать")
         elif data_index[2] == "no":
             return "{}\t({})\n\n{}".format(data_index[0], data_index[1], "Спать нельзя")
+        elif data_index[2] == "break":
+            return "{}\n\n{}".format(data_index[0], "Можно спать")
 
-raspisanie = 'BQACAgIAAxkDAAICPl64er94NiYxab2Vu5aCMe1nx5QQAAIGCgACC4nASfd25oHvfjAkGQQ'
+raspisanie = 'BQACAgIAAxkDAAIUw17JIqz3uShgEQ7R-CynGamc2b3iAAKmBgACT_dISry8ZIIFkm7lGQQ'
 
 salaam = """Ассаламу алейкум\n
 Я - Дистанционка БОТ группы ПИ-1💻\n
